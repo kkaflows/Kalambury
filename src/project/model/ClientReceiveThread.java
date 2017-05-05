@@ -2,6 +2,7 @@ package project.model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,27 +27,33 @@ public class ClientReceiveThread extends Thread {
         this.graphicsContext = graphicsContext;
     }
 
+
+    public ClientReceiveThread(Socket socket, GraphicsContext graphicsContext) throws IOException {
+        this.socket = socket;
+        this.graphicsContext = graphicsContext;
+        objectInputStream = new ObjectInputStream(socket.getInputStream());
+    }
+
     @Override
     public void run() {
         System.out.println("New ClientReceiveThread");
 
-        while(true){
-            while (true) {
-                try {
+        while (true) {
+            try {
+                if(objectInputStream.readObject() instanceof DataPackage) {
                     dataPackage = (DataPackage) objectInputStream.readObject();
                     System.out.println(dataPackage.getX());
-                    graphicsContext.fillOval(dataPackage.getX()+10, dataPackage.getY()+10, 5, 5);
+                    graphicsContext.fillOval(dataPackage.getX() + 10, dataPackage.getY() + 10, 5, 5);
 
                     dataPackage = null;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
 
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        }
 
+        }
     }
+
+
 }

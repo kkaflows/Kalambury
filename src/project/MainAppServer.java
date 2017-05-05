@@ -15,8 +15,8 @@ public class MainAppServer {
 
     static ServerSocket serverSocket;
     static Socket socket;
-    static List<Socket> socketList;
-    static List<ServerThread> threadList;
+    static ArrayList<Socket> socketList;
+    static ArrayList<ServerThread> threadList;
 
     public static void main(String[] args) {
         try {
@@ -30,7 +30,6 @@ public class MainAppServer {
         while (true){
             try {
                 socket = null;
-                System.out.println("before accept");
                 socket = serverSocket.accept();
                 System.out.println("Established connection");
                 socketList.add(socket);
