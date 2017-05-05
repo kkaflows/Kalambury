@@ -14,11 +14,10 @@ import java.net.Socket;
  */
 public class ClientReceiveThread extends Thread {
 
-    private Socket socket;
+
     private DataPackage dataPackage;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
-    private Canvas canvas;
     private GraphicsContext graphicsContext;
 
     public ClientReceiveThread(ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream, GraphicsContext graphicsContext) {
@@ -27,12 +26,6 @@ public class ClientReceiveThread extends Thread {
         this.graphicsContext = graphicsContext;
     }
 
-
-    public ClientReceiveThread(Socket socket, GraphicsContext graphicsContext) throws IOException {
-        this.socket = socket;
-        this.graphicsContext = graphicsContext;
-        objectInputStream = new ObjectInputStream(socket.getInputStream());
-    }
 
     @Override
     public void run() {
