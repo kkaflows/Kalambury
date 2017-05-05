@@ -1,5 +1,6 @@
 package project.model;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,9 +19,17 @@ public class ServerThread extends Thread {
     private static List<ObjectOutputStream> outputStreams = Collections.synchronizedList(new ArrayList<>());
     private static List<DataPackage> history = Collections.synchronizedList(new ArrayList<>());
 
+    private static String keyWord;
+    String msg;
+
+    List<String> keyWords = new ArrayList<String>();
+    private int keyWordNumber = 0;
+
 
     public ServerThread(Socket socket) {
         this.socket = socket;
+
+
     }
 
     @Override
@@ -48,17 +57,30 @@ public class ServerThread extends Thread {
     private void updatePlayers() {
         while (true) {
             try {
-                System.out.println("run");
-                DataPackage dataPackage = (DataPackage) objectInputStream.readObject();
-                history.add(dataPackage);
-                System.out.println(dataPackage.getX());
+                Object o = objectInputStream.readObject();
+                if (o instanceof DataPackage) {
+                    System.out.println("DataPackage");
+                    DataPackage dataPackage = (DataPackage) o;
+                    history.add(dataPackage);
+                    System.out.println(dataPackage.getX());
 
-                for (ObjectOutputStream outputStream : outputStreams) {
-                    if(outputStream !=objectOutputStream)
-                    outputStream.writeObject(dataPackage);
+                    for (ObjectOutputStream outputStream : outputStreams) {
+                        if (outputStream != objectOutputStream)
+                            outputStream.writeObject(dataPackage);
+                    }
+                }
+                if (o instanceof String) {
+                    System.out.println("String");
+                    String msg = (String) o;
+                    System.out.println(msg);
+                    for (ObjectOutputStream outputStream : outputStreams) {
+                        if (outputStream != objectOutputStream)
+                            outputStream.writeObject(msg);
+
+                    }
                 }
 
-                dataPackage = null;
+                //dataPackage = null;
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -66,4 +88,5 @@ public class ServerThread extends Thread {
 
         }
     }
+
 }

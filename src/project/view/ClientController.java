@@ -1,9 +1,12 @@
 package project.view;
 
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +18,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lenovo on 2017-05-05.
@@ -26,16 +31,17 @@ public class ClientController {
     public ObjectInputStream objectInputStream;
     public ObjectOutputStream objectOutputStream;
     public GraphicsContext graphicsContext;
+    String msg;
+    String key;
+    List<String> keyWords = new ArrayList<String>();
+    static int keyWordNumber = 0;
+
 
     @FXML
     public Canvas canvas;
 
     @FXML
     private TextField textField;
-
-    @FXML
-    private Button button;
-
 
     public void setMainAppClient(MainAppClient mainAppClient) {
         this.mainAppClient = mainAppClient;
@@ -50,6 +56,10 @@ public class ClientController {
 
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
+            keyWords.add("dom");
+            keyWords.add("rower");
+            keyWords.add("");
+            setKeyWords();
 
 
 
@@ -124,6 +134,48 @@ public class ClientController {
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(1);
     }
+
+    @FXML
+    private void handleSendButton() {
+        msg = textField.getText();
+        try {
+            objectOutputStream.writeObject(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(isWinner()){
+            msg = "win";
+            try {
+                objectOutputStream.writeObject(msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Win");
+            alert.setHeaderText("You win");
+            alert.setContentText("You win");
+            alert.showAndWait();
+        }
+
+    }
+
+    private boolean isWinner() {
+        if (msg.equals(key)){
+            setKeyWords();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void setKeyWords(){
+        key = keyWords.get(keyWordNumber);
+        keyWordNumber++;
+    }
+
+
 
 
 }

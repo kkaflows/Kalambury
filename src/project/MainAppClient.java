@@ -19,7 +19,7 @@ public class MainAppClient extends Application {
     public void start(Stage primaryStage) throws Exception {
         System.out.println("test");
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Kalambury klient");
+        this.primaryStage.setTitle("Kalambury");
 
         initRootLayout();
 
