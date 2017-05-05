@@ -54,6 +54,7 @@ public class ServerThread extends Thread {
                 System.out.println(dataPackage.getX());
 
                 for (ObjectOutputStream outputStream : outputStreams) {
+                    if(outputStream !=objectOutputStream)
                     outputStream.writeObject(dataPackage);
                 }
 

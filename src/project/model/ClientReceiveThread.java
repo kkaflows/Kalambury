@@ -43,7 +43,7 @@ public class ClientReceiveThread extends Thread {
                 if(objectInputStream.readObject() instanceof DataPackage) {
                     dataPackage = (DataPackage) objectInputStream.readObject();
                     System.out.println(dataPackage.getX());
-                    graphicsContext.fillOval(dataPackage.getX() + 10, dataPackage.getY() + 10, 5, 5);
+                    graphicsContext.fillOval(dataPackage.getX(), dataPackage.getY(), 5, 5);
 
                     dataPackage = null;
                 }
