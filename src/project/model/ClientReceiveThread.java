@@ -42,20 +42,20 @@ public class ClientReceiveThread extends Thread {
                 }
                 if(o instanceof String){
                     msg = (String) o;
-                    if(msg.equals("win")){
-
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Lose");
-                                alert.setHeaderText("You lost");
-                                alert.setContentText("You lost");
-                                alert.showAndWait();
-                            }
-                        });
-                    }else
+//                    if(msg.equals("win")){
+//
+//                        Platform.runLater(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                                alert.setTitle("Lose");
+//                                alert.setHeaderText("You lost");
+//                                alert.setContentText("You lost");
+//                                alert.showAndWait();
+//                            }
+//                        });
+//                    }else
                     System.out.println(msg);
                 }
 

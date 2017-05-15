@@ -62,7 +62,6 @@ public class ClientController {
             setKeyWords();
 
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,7 +81,7 @@ public class ClientController {
                     double x = event.getX();
                     double y = event.getY();
                     graphicsContext.fillOval(event.getX(), event.getY(), 5, 5);
-                    dataPackage = new DataPackage("test", x, y);
+                    dataPackage = new DataPackage( x, y);
 //                System.out.println(dataPackage.getX());
 //                System.out.println(dataPackage.getY());
 
@@ -101,7 +100,7 @@ public class ClientController {
                 double x = event.getX();
                 double y = event.getY();
                 graphicsContext.fillOval(event.getX(), event.getY(), 5, 5);
-                dataPackage = new DataPackage("test", x, y);
+                dataPackage = new DataPackage(x, y);
                 System.out.println(dataPackage.getX());
                 System.out.println(dataPackage.getY());
                 try {
@@ -144,38 +143,36 @@ public class ClientController {
             e.printStackTrace();
         }
 
-        if(isWinner()){
-            msg = "win";
-            try {
-                objectOutputStream.writeObject(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Win");
-            alert.setHeaderText("You win");
-            alert.setContentText("You win");
-            alert.showAndWait();
-        }
+//        if (isWinner()) {
+//            msg = "win";
+//            try {
+//                objectOutputStream.writeObject(msg);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Win");
+//            alert.setHeaderText("You win");
+//            alert.setContentText("You win");
+//            alert.showAndWait();
+//        }
 
     }
 
     private boolean isWinner() {
-        if (msg.equals(key)){
+        if (msg.equals(key)) {
             setKeyWords();
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    private void setKeyWords(){
+    private void setKeyWords() {
         key = keyWords.get(keyWordNumber);
         keyWordNumber++;
     }
-
-
 
 
 }

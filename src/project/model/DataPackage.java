@@ -7,22 +7,16 @@ import java.io.Serializable;
  */
 public class DataPackage implements Serializable {
 
-    private String text;
+
     private double x, y;
 
-    public DataPackage(String text, double x, double y) {
-        this.text = text;
+    public DataPackage( double x, double y) {
+
         this.x = x;
         this.y = y;
     }
 
-    public String getText() {
-        return text;
-    }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public double getX() {
         return x;
